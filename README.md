@@ -32,6 +32,8 @@ https://YOUR-PROJECT.vercel.app/api/mcp?key=YOUR_MCP_SECRET
 claude mcp add --transport http gemini-studio "https://YOUR-PROJECT.vercel.app/api/mcp?key=YOUR_MCP_SECRET"
 ```
 
+Alternatively use No sign-in + a request header `x-api-key: YOUR_MCP_SECRET` and drop `?key=` from the URL.
+
 Anyone with that URL can spend your Gemini credits. Keep it private, and rotate `MCP_SECRET` if it leaks.
 
 ## Limits

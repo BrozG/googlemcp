@@ -195,8 +195,13 @@ async function authed(req: Request): Promise<Response> {
   const secret = process.env.MCP_SECRET;
   if (!secret) return new Response("MCP_SECRET not configured", { status: 500 });
   const url = new URL(req.url);
-  const given = url.searchParams.get("key") ?? req.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
-  if (given !== secret) return new Response("Unauthorized", { status: 401 });
+  const candidates = [
+    url.searchParams.get("key"),
+    req.headers.get("x-api-key"),
+    req.headers.get("x-mcp-key"),
+    req.headers.get("authorization")?.replace(/^Bearer\s+/i, ""),
+  ].map((v) => v?.trim());
+  if (!candidates.includes(secret.trim())) return new Response("Unauthorized", { status: 401 });
   return handler(req);
 }
 
