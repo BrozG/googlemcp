@@ -15,7 +15,7 @@ export function ai(): GoogleGenAI {
   if (!_ai) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) throw new Error("GEMINI_API_KEY is not set in Vercel env vars.");
-    _ai = new GoogleGenAI({ apiKey });
+    _ai = new GoogleGenAI({ apiKey, apiVersion: process.env.GEMINI_API_VERSION ?? "v1beta" });
   }
   return _ai;
 }

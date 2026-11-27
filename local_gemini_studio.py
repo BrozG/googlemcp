@@ -52,7 +52,7 @@ def client() -> genai.Client:
         key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
         if not key:
             raise RuntimeError("GEMINI_API_KEY is not set. Add it to the MCP server's env in your Claude config.")
-        _client = genai.Client(api_key=key)
+        _client = genai.Client(api_key=key, http_options={"api_version": os.environ.get("GEMINI_API_VERSION", "v1beta")})
     return _client
 
 
