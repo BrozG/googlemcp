@@ -44,14 +44,14 @@ const handler = createMcpHandler(
           const params: Record<string, unknown> = {
             model: a.model ?? IMAGE_MODEL,
             input: parts.length ? [{ type: "text", text: a.prompt }, ...parts] : a.prompt,
-            response_format: { type: "image", mime_type: "image/png", aspect_ratio: a.aspect_ratio, image_size: a.image_size },
+            response_format: { type: "image", mime_type: "image/jpeg", aspect_ratio: a.aspect_ratio, image_size: a.image_size },
           };
           if (a.continue_from) params.previous_interaction_id = a.continue_from;
           if (a.thinking_level) params.generation_config = { thinking_level: a.thinking_level };
           const it = await interact(params);
           if (!it?.output_image?.data) return text(noOutput(it, "image"));
           const buf = Buffer.from(it.output_image.data, "base64");
-          const url = await store(buf, "images", a.filename, "image", "png", "image/png");
+          const url = await store(buf, "images", a.filename, "image", "jpg", "image/jpeg");
           return {
             content: [
               { type: "text" as const, text: `URL: ${url}\ninteraction_id: ${it.id}` },

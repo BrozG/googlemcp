@@ -154,7 +154,7 @@ async def generate_image(
         kwargs = dict(
             model=model or IMAGE_MODEL,
             input=inp,
-            response_format={"type": "image", "mime_type": "image/png",
+            response_format={"type": "image", "mime_type": "image/jpeg",
                              "aspect_ratio": aspect_ratio, "image_size": image_size.upper()},
         )
         if continue_from:
@@ -169,7 +169,7 @@ async def generate_image(
         if not img or not getattr(img, "data", None):
             return [_no_output_msg(it, "image")]
         data = base64.b64decode(img.data)
-        path = _out_path(filename, "image", "png", "images")
+        path = _out_path(filename, "image", "jpg", "images")
         path.write_bytes(data)
         return [f"Saved: {path}\ninteraction_id: {it.id}", _preview(data)]
     except Exception as e:
